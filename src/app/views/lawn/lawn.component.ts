@@ -42,7 +42,7 @@ export class LawnComponent implements OnInit, OnDestroy {
   }
 
   makeNewRow(field: LawnField): boolean {
-    if (parseInt(field.position.y) === this.maxColumns - 1) {
+    if (parseInt(field.position.y) === this.maxColumns) {
       return true;
     }
   }
@@ -63,12 +63,12 @@ export class LawnComponent implements OnInit, OnDestroy {
           break;
         }
         case 'L': {
-          mower.mowerPostion.direction = this.directionHandler('L', mower.mowerPostion.direction);
+          mower.mowerPostion.direction = this.directionChanger('L', mower.mowerPostion.direction);
           mower.move(mower.mowerPostion);
           break;
         }
         case 'R': {
-          mower.mowerPostion.direction = this.directionHandler('R', mower.mowerPostion.direction);
+          mower.mowerPostion.direction = this.directionChanger('R', mower.mowerPostion.direction);
           mower.move(mower.mowerPostion);
           break;
         }
@@ -111,7 +111,7 @@ export class LawnComponent implements OnInit, OnDestroy {
   moveIsPossible(mower: Mower, x: number, y: number): boolean {
     switch (mower.mowerPostion.direction) {
       case 'N': {
-        if (x < this.lawn.maxX - 1) return true;
+        if (x < this.lawn.maxX) return true;
         break;
       }
       case 'S': {
@@ -119,7 +119,7 @@ export class LawnComponent implements OnInit, OnDestroy {
         break;
       }
       case 'E': {
-        if (y < this.lawn.maxY - 1) return true;
+        if (y < this.lawn.maxY) return true;
         break;
       }
       case 'W': {
@@ -130,7 +130,7 @@ export class LawnComponent implements OnInit, OnDestroy {
     }
   }
 
-  directionHandler(turn: 'R' | 'L', mowerFace: Direction): Direction {
+  directionChanger(turn: 'R' | 'L', mowerFace: Direction): Direction {
     let mappedDirectionsWithRotationToRight = {
       'N': 'E',
       'E': 'S',

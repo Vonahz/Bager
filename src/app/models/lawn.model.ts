@@ -15,8 +15,8 @@ export class Lawn {
         this.maxY = parseInt(maxY, 10);
 
         // map fields
-        for (let i = this.maxX - 1; i >= 0; i--) {
-            for (let j = 0; j <= this.maxY - 1; j++) {
+        for (let i = this.maxX; i >= 0; i--) {
+            for (let j = 0; j <= this.maxY; j++) {
                 let lawnFieldCoord: LawnField = {
                     position: {
                         x: i + '',
