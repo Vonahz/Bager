@@ -1,0 +1,30 @@
+<ng-container class="lawn" *ngFor="let field of lawnFields;">
+  <div class="lawn-field">
+    <span>X: {{field.position.x}} | Y: {{field.position.y}}</span>
+    <br>
+    <span class="mower" *ngIf="field.mower">M << {{field.mower.mowerPostion.direction}}>></span>
+  </div>
+  <br *ngIf="makeNewRow(field)">
+
+</ng-container>
+
+<br>
+<br>
+
+<label>Create Mower:</label> <br>
+<input #x type="text" placeholder="x" value="0" size="5">
+<input #y type="text" placeholder="y" value="0" size="5">
+<input #d type="text" placeholder="N/E/W/S" value="N" size="5">
+<button (click)="addMower({x : x.value, y: y.value, direction:  d.value})">Create</button>
+
+<br>
+<br>
+
+<ul class="mower-list">
+  Mower List:
+  <li *ngFor="let mower of mowers; let i = index;" class="mower">
+    Mower {{i + 1}}
+    <input #commandField type="text" value="" size="20">
+    <button (click)="moveMower(commandField, mower)">Move</button>
+  </li>
+</ul>

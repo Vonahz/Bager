@@ -1,0 +1,10 @@
+<div *ngIf="!createLawnIsClicked">
+  <label>Create Lawn:</label> <br>
+  <input #x type="text" placeholder="x" value="5" size="5">
+  <input #y type="text" placeholder="y" value="5" size="5">
+  <button (click)="createLawn(x.value, y.value)">Go</button>
+</div>
+
+<div *ngIf="createLawnIsClicked">
+  <app-lawn [lawn]="lawn"></app-lawn>
+</div>
