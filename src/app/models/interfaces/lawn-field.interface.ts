@@ -1,4 +1,4 @@
-import { Mower } from './mower.model';
+import { Mower } from '../mower.model';
 
 export interface LawnField {
     position: {

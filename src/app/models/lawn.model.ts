@@ -1,6 +1,6 @@
 import { Mower } from './mower.model';
-import { MowerPosition } from './mower-position.interface';
-import { LawnField } from './lawn-field.interface';
+import { MowerPosition } from './interfaces/mower-position.interface';
+import { LawnField } from './interfaces/lawn-field.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export class Lawn {

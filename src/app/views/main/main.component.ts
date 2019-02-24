@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Lawn } from 'src/app/models/lawn.model';
-import { MowerPosition } from 'src/app/models/mower-position.interface';
+import { MowerPosition } from 'src/app/models/interfaces/mower-position.interface';
 import { Mower } from 'src/app/models/mower.model';
 
 @Component({

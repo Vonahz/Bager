@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Lawn } from 'src/app/models/lawn.model';
 import { Subscription } from 'rxjs';
-import { LawnField } from 'src/app/models/lawn-field.interface';
+import { LawnField } from 'src/app/models/interfaces/lawn-field.interface';
 import { Mower } from 'src/app/models/mower.model';
-import { MowerPosition } from 'src/app/models/mower-position.interface';
+import { MowerPosition } from 'src/app/models/interfaces/mower-position.interface';
 import { Direction } from 'src/app/models/types/direction.type';
 
 @Component({
@@ -82,23 +82,51 @@ export class LawnComponent implements OnInit, OnDestroy {
   }
 
   moveHandler(mower: Mower): void {
+    let x = parseInt(mower.mowerPostion.x, 10);
+    let y = parseInt(mower.mowerPostion.y, 10);
+    if (!this.moveIsPossible(mower, x, y)) {
+      console.error('Cannot move there');
+      return;
+    }
     switch (mower.mowerPostion.direction) {
       case 'N': {
-        mower.mowerPostion.x = (parseInt(mower.mowerPostion.x, 10) + 1) + '';
+        mower.mowerPostion.x = (x + 1) + '';
         break;
       }
       case 'S': {
-        mower.mowerPostion.x = (parseInt(mower.mowerPostion.x, 10) - 1) + '';
+        mower.mowerPostion.x = (x - 1) + '';
         break;
       }
       case 'E': {
-        mower.mowerPostion.y = (parseInt(mower.mowerPostion.y, 10) + 1) + '';
+        mower.mowerPostion.y = (y + 1) + '';
         break;
       }
       case 'W': {
-        mower.mowerPostion.y = (parseInt(mower.mowerPostion.y, 10) - 1) + '';
+        mower.mowerPostion.y = (y - 1) + '';
         break;
       }
+    }
+  }
+
+  moveIsPossible(mower: Mower, x: number, y: number): boolean {
+    switch (mower.mowerPostion.direction) {
+      case 'N': {
+        if (x < this.lawn.maxX - 1) return true;
+        break;
+      }
+      case 'S': {
+        if (x > 0) return true;
+        break;
+      }
+      case 'E': {
+        if (y < this.lawn.maxY - 1) return true;
+        break;
+      }
+      case 'W': {
+        if (y > 0) return true;
+        break;
+      }
+      default: return false;
     }
   }
 

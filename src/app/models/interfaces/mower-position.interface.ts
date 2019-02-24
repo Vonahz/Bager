@@ -1,4 +1,4 @@
-import { Direction } from './types/direction.type';
+import { Direction } from '../types/direction.type';
 
 export interface MowerPosition {
     x: string,

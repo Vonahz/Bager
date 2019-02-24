@@ -1,9 +1,16 @@
-import { MowerPosition } from './mower-position.interface';
+import { MowerPosition } from './interfaces/mower-position.interface';
 
+let id: number = 1;
 export class Mower {
-    mowerPostion: MowerPosition;
+    id: number;
+    mowerPostion: MowerPosition = {
+        x: '0',
+        y: '0',
+        direction: 'N'
+    };
 
     constructor(initPos: MowerPosition) {
+        this.id = id++;
         this.mowerPostion = initPos;
     }
 
