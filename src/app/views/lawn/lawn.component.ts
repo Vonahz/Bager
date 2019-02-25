@@ -25,8 +25,8 @@ export class LawnComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit() {
-    this.maxColumns = this.lawn.maxY;
-    this.maxRows = this.lawn.maxX;
+    this.maxColumns = this.lawn.maxX;
+    this.maxRows = this.lawn.maxY;
     this.subscribeToData();
   }
 
@@ -42,7 +42,7 @@ export class LawnComponent implements OnInit, OnDestroy {
   }
 
   makeNewRow(field: LawnField): boolean {
-    if (parseInt(field.position.y) === this.maxColumns) {
+    if (parseInt(field.position.x, 10) === this.lawn.maxX) {
       return true;
     }
   }
@@ -90,19 +90,19 @@ export class LawnComponent implements OnInit, OnDestroy {
     }
     switch (mower.mowerPostion.direction) {
       case 'N': {
-        mower.mowerPostion.x = (x + 1) + '';
-        break;
-      }
-      case 'S': {
-        mower.mowerPostion.x = (x - 1) + '';
-        break;
-      }
-      case 'E': {
         mower.mowerPostion.y = (y + 1) + '';
         break;
       }
-      case 'W': {
+      case 'S': {
         mower.mowerPostion.y = (y - 1) + '';
+        break;
+      }
+      case 'E': {
+        mower.mowerPostion.x = (x + 1) + '';
+        break;
+      }
+      case 'W': {
+        mower.mowerPostion.x = (x - 1) + '';
         break;
       }
     }
@@ -111,19 +111,19 @@ export class LawnComponent implements OnInit, OnDestroy {
   moveIsPossible(mower: Mower, x: number, y: number): boolean {
     switch (mower.mowerPostion.direction) {
       case 'N': {
-        if (x < this.lawn.maxX) return true;
-        break;
-      }
-      case 'S': {
-        if (x > 0) return true;
-        break;
-      }
-      case 'E': {
         if (y < this.lawn.maxY) return true;
         break;
       }
-      case 'W': {
+      case 'S': {
         if (y > 0) return true;
+        break;
+      }
+      case 'E': {
+        if (x < this.lawn.maxX) return true;
+        break;
+      }
+      case 'W': {
+        if (x > 0) return true;
         break;
       }
       default: return false;

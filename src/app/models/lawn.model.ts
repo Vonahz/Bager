@@ -19,8 +19,8 @@ export class Lawn {
             for (let j = 0; j <= this.maxY; j++) {
                 let lawnFieldCoord: LawnField = {
                     position: {
-                        x: i + '',
-                        y: j + ''
+                        x: j + '',
+                        y: i + ''
                     }
                 }
                 this.fieldMap.push(lawnFieldCoord);
