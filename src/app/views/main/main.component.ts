@@ -11,6 +11,9 @@ import { Mower } from 'src/app/models/mower.model';
 export class MainComponent implements OnInit {
   lawn: Lawn;
   createLawnIsClicked: boolean = false;
+  readFromFileBool: boolean = false;
+  lawnType: 'manual' | 'file';
+  lawnMowerData: string[] = [];
 
   constructor() { }
 
@@ -20,6 +23,22 @@ export class MainComponent implements OnInit {
   createLawn(x: string, y: string) {
     this.lawn = new Lawn(x, y);
     this.createLawnIsClicked = true;
+  }
+
+  selectFile(event) {
+    this.lawnType = 'file';
+
+    let fileReader = new FileReader();
+    fileReader.readAsText(event.target.files[0]);
+    fileReader.onloadend = (e) => {
+      let fileText = fileReader.result.toString();
+      let fileLines = fileText.split('\n');
+      
+      let lawnSize = fileLines[0].split(' ');
+      this.lawn = new Lawn(lawnSize[0], lawnSize[1])
+      this.lawnMowerData = fileLines.splice(1, fileLines.length);
+      this.createLawnIsClicked = true;
+    };
   }
 
 }

@@ -1,4 +1,10 @@
-<div *ngIf="!createLawnIsClicked">
+<div *ngIf="!lawnType">
+  <button (click)="lawnType = 'manual'">Manual Run</button>
+  or
+  <input type='file' (change)="selectFile($event)">
+</div>
+
+<div *ngIf="lawnType === 'manual' && !createLawnIsClicked">
   <label>Create Lawn:</label> <br>
   <input #x type="text" placeholder="x" value="5" size="5">
   <input #y type="text" placeholder="y" value="5" size="5">
@@ -6,5 +12,5 @@
 </div>
 
 <div *ngIf="createLawnIsClicked">
-  <app-lawn [lawn]="lawn"></app-lawn>
+  <app-lawn [lawn]="lawn" [readFromFile]="lawnType === 'file'" [mowerData]="lawnMowerData"></app-lawn>
 </div>

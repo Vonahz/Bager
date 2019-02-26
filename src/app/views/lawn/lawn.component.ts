@@ -13,6 +13,8 @@ import { Direction } from 'src/app/models/types/direction.type';
 })
 export class LawnComponent implements OnInit, OnDestroy {
   @Input() lawn: Lawn;
+  @Input() readFromFile: boolean = false;
+  @Input() mowerData: string[] = [];
 
   maxColumns: number = 0;
   maxRows: number = 0;
@@ -28,6 +30,10 @@ export class LawnComponent implements OnInit, OnDestroy {
     this.maxColumns = this.lawn.maxX;
     this.maxRows = this.lawn.maxY;
     this.subscribeToData();
+
+    if (this.mowerData.length > 0) {
+      this.createMowersFromFile();
+    }
   }
 
   subscribeToData(): any {
@@ -41,20 +47,38 @@ export class LawnComponent implements OnInit, OnDestroy {
     });
   }
 
+  createMowersFromFile(): void {
+    this.mowerData.forEach((mowerData, index) => {
+      if (index % 2 === 0) {
+        let mowerOptions = mowerData.split(' ');
+        this.mowers.push(this.addMower({ x: mowerOptions[0], y: mowerOptions[1], direction: <Direction>mowerOptions[2] }));
+      }
+    });
+  }
+
+  moveAllMowers(): void {
+    this.mowerData.forEach((mowerData, index) => {
+      if (index % 2 > 0) {
+        this.moveMower(mowerData, this.mowers[index - 1]);
+      }
+    });
+  }
+
   makeNewRow(field: LawnField): boolean {
     if (parseInt(field.position.x, 10) === this.lawn.maxX) {
       return true;
     }
   }
 
-  addMower(initPos: MowerPosition) {
+  addMower(initPos: MowerPosition): Mower {
     let mower = new Mower(initPos);
     this.lawn.setMower(mower);
+    return mower;
   }
 
   moveMower(input, mower: Mower) {
     this.lawn.removeMower(mower);
-    let lettersArray = input.value.split('');
+    let lettersArray = input.split('');
     lettersArray.forEach(command => {
       switch (command) {
         case 'F': {
@@ -78,7 +102,6 @@ export class LawnComponent implements OnInit, OnDestroy {
       }
     })
     this.lawn.setMower(mower);
-    input.value = '';
   }
 
   moveHandler(mower: Mower): void {

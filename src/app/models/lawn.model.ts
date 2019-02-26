@@ -37,7 +37,6 @@ export class Lawn {
                 field.mower = mower;
             }
         });
-
         this.mowerBSubj.next(this.fieldMap);
     }
 

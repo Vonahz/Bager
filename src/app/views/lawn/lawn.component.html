@@ -1,26 +1,25 @@
 <div class="clearfix">
-  <div class="float-right">
+  <div *ngIf="!readFromFile" class="float-right">
     <label>Create Mower:</label> <br>
     <input #x type="text" placeholder="x" value="" size="5">
     <input #y type="text" placeholder="y" value="" size="5">
     <input #d type="text" placeholder="N/E/W/S" value="" size="5">
     <button (click)="addMower({x : x.value, y: y.value, direction:  d.value})">Create</button>
-  
+
     <br>
     <br>
-  
+
     <ul class="mower-list">
       Mower List:
       <li *ngFor="let mower of mowers" class="mower">
         Mower {{mower.id}}
         <input #commandField type="text" value="" size="20">
-        <button (click)="moveMower(commandField, mower)">Move</button>
+        <button (click)="moveMower(commandField.value, mower)">Move</button>
       </li>
     </ul>
-  
   </div>
-  
-  
+
+
   <ng-container class="lawn" *ngFor="let field of lawnFields;">
     <div class="lawn-field">
       <span>x: {{field.position.x}} y: {{field.position.y}}</span>
@@ -30,6 +29,7 @@
     <br *ngIf="makeNewRow(field)">
 
   </ng-container>
+  <button *ngIf="readFromFile" (click)="moveAllMowers()">Move</button>
 
   <br>
   <br>
