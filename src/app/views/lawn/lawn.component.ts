@@ -36,7 +36,7 @@ export class LawnComponent implements OnInit, OnDestroy {
     }
   }
 
-  subscribeToData(): any {
+  subscribeToData(): void {
     this.mowerSub = this.lawn.getMowerObs().subscribe((fields: LawnField[]) => {
       this.lawnFields = fields;
 
@@ -50,16 +50,9 @@ export class LawnComponent implements OnInit, OnDestroy {
   createMowersFromFile(): void {
     this.mowerData.forEach((mowerData, index) => {
       if (index % 2 === 0) {
-        let mowerOptions = mowerData.split(' ');
-        this.mowers.push(this.addMower({ x: mowerOptions[0], y: mowerOptions[1], direction: <Direction>mowerOptions[2] }));
-      }
-    });
-  }
-
-  moveAllMowers(): void {
-    this.mowerData.forEach((mowerData, index) => {
-      if (index % 2 > 0) {
-        this.moveMower(mowerData, this.mowers[index - 1]);
+        let mowerOptions = mowerData.trim().split(' ');
+        let mower = this.addMower({ x: mowerOptions[0], y: mowerOptions[1], direction: <Direction>mowerOptions[2] });
+        this.moveMower(this.mowerData[index + 1], mower);
       }
     });
   }
@@ -78,8 +71,8 @@ export class LawnComponent implements OnInit, OnDestroy {
 
   moveMower(input, mower: Mower) {
     this.lawn.removeMower(mower);
-    let lettersArray = input.split('');
-    lettersArray.forEach(command => {
+    let lettersArray = input.trim().split('');
+    lettersArray.forEach((command: string) => {
       switch (command) {
         case 'F': {
           this.moveHandler(mower);
@@ -154,21 +147,24 @@ export class LawnComponent implements OnInit, OnDestroy {
   }
 
   directionChanger(turn: 'R' | 'L', mowerFace: Direction): Direction {
-    let mappedDirectionsWithRotationToRight = {
-      'N': 'E',
-      'E': 'S',
-      'S': 'W',
-      'W': 'N'
-    };
+    if (turn === 'R') {
+      switch (mowerFace) {
+        case 'N': return 'E';
+        case 'E': return 'S';
+        case 'S': return 'W';
+        case 'W': return 'N';
+      }
+    }
+    else {
+      switch (mowerFace) {
+        case 'N': return 'W';
+        case 'W': return 'S';
+        case 'S': return 'E';
+        case 'E': return 'N';
+      }
+    }
 
-    let mappedDirectionsWithRotationToLeft = {
-      'E': 'N',
-      'S': 'E',
-      'W': 'S',
-      'N': 'W'
-    };
-
-    return (turn === 'R') ? <Direction>mappedDirectionsWithRotationToRight[mowerFace] : <Direction>mappedDirectionsWithRotationToLeft[mowerFace];
+    return 'N';
   }
 
   ngOnDestroy() {

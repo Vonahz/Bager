@@ -14,7 +14,7 @@
       <li *ngFor="let mower of mowers" class="mower">
         Mower {{mower.id}}
         <input #commandField type="text" value="" size="20">
-        <button (click)="moveMower(commandField.value, mower)">Move</button>
+        <button (click)="moveMower(commandField.value, mower)">Go</button>
       </li>
     </ul>
   </div>

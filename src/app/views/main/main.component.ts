@@ -33,8 +33,8 @@ export class MainComponent implements OnInit {
     fileReader.onloadend = (e) => {
       let fileText = fileReader.result.toString();
       let fileLines = fileText.split('\n');
-      
-      let lawnSize = fileLines[0].split(' ');
+
+      let lawnSize = fileLines[0].trim().split(' ');
       this.lawn = new Lawn(lawnSize[0], lawnSize[1])
       this.lawnMowerData = fileLines.splice(1, fileLines.length);
       this.createLawnIsClicked = true;
