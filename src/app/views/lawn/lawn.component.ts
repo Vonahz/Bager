@@ -148,6 +148,7 @@ export class LawnComponent implements OnInit, OnDestroy {
 
   directionChanger(turn: 'R' | 'L', mowerFace: Direction): Direction {
     if (turn === 'R') {
+      // rotate to right
       switch (mowerFace) {
         case 'N': return 'E';
         case 'E': return 'S';
@@ -156,6 +157,7 @@ export class LawnComponent implements OnInit, OnDestroy {
       }
     }
     else {
+      // rotate to left
       switch (mowerFace) {
         case 'N': return 'W';
         case 'W': return 'S';
@@ -163,8 +165,6 @@ export class LawnComponent implements OnInit, OnDestroy {
         case 'E': return 'N';
       }
     }
-
-    return 'N';
   }
 
   ngOnDestroy() {
