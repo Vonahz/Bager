@@ -12,12 +12,9 @@ import { Direction } from 'src/app/models/types/direction.type';
   styleUrls: ['./lawn.component.scss']
 })
 export class LawnComponent implements OnInit, OnDestroy {
-  @Input() lawn: Lawn;
+  @Input() lawn: Lawn = new Lawn('0', '0');
   @Input() readFromFile: boolean = false;
   @Input() mowerData: string[] = [];
-
-  maxColumns: number = 0;
-  maxRows: number = 0;
 
   lawnFields: LawnField[] = [];
   mowerSub: Subscription = new Subscription();
@@ -27,8 +24,6 @@ export class LawnComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit() {
-    this.maxColumns = this.lawn.maxX;
-    this.maxRows = this.lawn.maxY;
     this.subscribeToData();
 
     if (this.mowerData.length > 0) {
